@@ -1,0 +1,78 @@
+.raffle-ticket-widget {
+	max-width: 480px;
+	font-size: 15px;
+}
+
+.raffle-ticket-claim {
+	margin-bottom: 1em;
+}
+
+.raffle-ticket-button {
+	display: inline-block;
+	padding: 0.65em 1.4em;
+	font-size: 1em;
+	font-weight: 600;
+	border: none;
+	border-radius: 6px;
+	background: #2271b1;
+	color: #fff;
+	cursor: pointer;
+	transition: background 0.15s ease;
+}
+
+.raffle-ticket-button:hover:not(:disabled) {
+	background: #135e96;
+}
+
+.raffle-ticket-button:disabled {
+	background: #999;
+	cursor: default;
+	opacity: 0.8;
+}
+
+.raffle-ticket-status {
+	margin-top: 0.6em;
+	font-weight: 500;
+}
+
+.raffle-ticket-status.raffle-ticket-error {
+	color: #b32d2e;
+}
+
+.raffle-ticket-message {
+	margin-bottom: 0.6em;
+}
+
+.raffle-ticket-login-link {
+	display: inline-block;
+	padding: 0.5em 1.2em;
+	border-radius: 6px;
+	background: #2271b1;
+	color: #fff;
+	text-decoration: none;
+}
+
+.raffle-ticket-history h4 {
+	margin-bottom: 0.5em;
+}
+
+.raffle-ticket-history-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.raffle-ticket-history-table th,
+.raffle-ticket-history-table td {
+	text-align: left;
+	padding: 0.4em 0.6em;
+	border-bottom: 1px solid #e2e2e2;
+}
+
+.raffle-ticket-won {
+	color: #2a8a3e;
+	font-weight: 600;
+}
+
+.raffle-ticket-pending {
+	color: #888;
+}
