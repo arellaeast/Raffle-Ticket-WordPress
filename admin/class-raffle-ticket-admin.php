@@ -205,9 +205,11 @@ class Raffle_Ticket_Admin {
 				</tbody>
 			</table>
 
-			<h2><?php esc_html_e( 'Shortcode', 'raffle-ticket' ); ?></h2>
-			<p><code>[raffle_ticket]</code> — <?php esc_html_e( 'add to any page or post.', 'raffle-ticket' ); ?></p>
+			<h2><?php esc_html_e( 'Shortcodes', 'raffle-ticket' ); ?></h2>
+			<p><code>[raffle_ticket]</code> — <?php esc_html_e( 'claim button + history. Add to any page or post.', 'raffle-ticket' ); ?></p>
 			<p><code>[raffle_ticket show_history="no"]</code> — <?php esc_html_e( 'hides the "My Tickets" history table.', 'raffle-ticket' ); ?></p>
+			<p><code>[raffle_ticket_history]</code> — <?php esc_html_e( 'read-only history table only, no claim button. Use on a My Account page.', 'raffle-ticket' ); ?></p>
+			<p><code>[raffle_ticket_history limit="50"]</code> — <?php esc_html_e( 'controls how many past tickets are shown (default 20).', 'raffle-ticket' ); ?></p>
 
 			<h2><?php esc_html_e( 'REST API', 'raffle-ticket' ); ?></h2>
 			<ul>

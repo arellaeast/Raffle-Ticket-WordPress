@@ -20,6 +20,8 @@ On activation, the plugin creates two database tables (`wp_raffle_tickets`, `wp_
 
 ## Usage
 
+### `[raffle_ticket]` — claim button + history
+
 Add the shortcode to any page or post:
 
 ```
@@ -45,6 +47,28 @@ Example:
 - **Logged in, hasn't claimed today:** an active "Get Today's Ticket" button.
 - **Logged in, already claimed:** their ticket number for today, button disabled.
 - **History table** (if enabled): past tickets with date, ticket number, and win/loss result.
+
+### `[raffle_ticket_history]` — read-only history, no claim button
+
+A separate, standalone shortcode for places where claiming shouldn't be possible — e.g. a "My Account" page. It only ever shows the user's past tickets and results; there is no button and no way to claim a ticket from here.
+
+```
+[raffle_ticket_history]
+```
+
+**Attributes:**
+
+| Attribute | Default | Description |
+|---|---|---|
+| `limit` | `20` | Number of past tickets to show. |
+
+Example:
+
+```
+[raffle_ticket_history limit="50"]
+```
+
+If the user is logged out, it shows a login prompt instead of history. If they have no past tickets, it shows a simple "you haven't claimed any tickets yet" message rather than an empty table.
 
 ## Admin Settings
 
@@ -169,10 +193,35 @@ raffle-ticket/
 │   └── class-raffle-ticket-rest.php           # Public REST API
 ├── admin/
 │   └── class-raffle-ticket-admin.php          # Settings page
-└── assets/
-    ├── css/raffle-ticket.css
-    └── js/raffle-ticket.js
+├── assets/
+│   ├── css/raffle-ticket.css
+│   └── js/raffle-ticket.js
+└── vendor/
+    └── plugin-update-checker/                 # Vendored GitHub update library
 ```
+
+## Updating from GitHub
+
+This plugin checks **GitHub Releases** for updates instead of WordPress.org, using the [Plugin Update Checker](https://github.com/YahnisElsts/plugin-update-checker) library (vendored in `vendor/plugin-update-checker/`). Once installed, "Update available" notices appear on the Plugins page exactly like any WordPress.org plugin — no extra setup needed on the WordPress side.
+
+**Source repo:** [arellaeast/Raffle-Ticket-WordPress](https://github.com/arellaeast/Raffle-Ticket-WordPress)
+
+### Publishing a new version
+
+For WordPress to detect a new version, every release must follow this sequence:
+
+1. Bump the `Version:` header in `raffle-ticket.php` (and the `RAFFLE_TICKET_VERSION` constant just below it) to the new version number.
+2. Commit and push.
+3. On GitHub, create an actual **Release** (Releases → Draft a new release) tagged with the new version (e.g. `v1.2.0`). A pushed tag or commit alone is **not** enough — it must be a Release, since that's what the update checker queries.
+4. GitHub auto-generates a source ZIP for the release. As long as the repo's top-level structure matches the plugin's folder layout (it does here), that auto-generated ZIP works as the update package — no manual ZIP upload required.
+
+WordPress checks for updates periodically and whenever an admin visits the Plugins page; there's no need to do anything further once the release is published.
+
+### Notes
+
+- The repo is public, so no access token is required.
+- If a release's version tag is *not* higher than the currently installed `Version:` header, WordPress won't offer the update — version numbers must increase.
+- The vendored update-checker library only runs in `wp-admin` contexts; it has no effect on front-end performance.
 
 ## Requirements
 
@@ -185,3 +234,4 @@ raffle-ticket/
 - WP-Cron timing is "best effort" without a real system cron trigger (see above).
 - No built-in admin UI for exporting tickets/winners to CSV.
 - No email or webhook notification on winner draw out of the box — use the `raffle_ticket_winner_drawn` action hook to add one.
+
